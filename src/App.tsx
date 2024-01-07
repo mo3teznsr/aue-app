@@ -21,10 +21,36 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { ThemeProvider, createTheme } from '@mui/material';
+import { green,lightGreen } from '@mui/material/colors';
+import Tabs from './pages/Tabs';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () =>{
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: green[300],
+      },
+     
+     
+    },
+    shape:{
+      borderRadius:15,
+    },
+    components:{
+      
+     MuiTextField:{
+      defaultProps:{style: {background:"#fff"}}
+     },
+     
+    }
+  });
+  
+  return(
+    <ThemeProvider theme={theme}>
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
@@ -34,9 +60,11 @@ const App: React.FC = () => (
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
+        <Route exact path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
-);
+  </ThemeProvider>
+)};
 
 export default App;
