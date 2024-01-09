@@ -24,7 +24,10 @@ import './theme/variables.css';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { green,lightGreen } from '@mui/material/colors';
 import Tabs from './pages/Tabs';
-
+import Register from './pages/Register';
+import Book from './pages/Book';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 setupIonicReact();
 
 const App: React.FC = () =>{
@@ -50,13 +53,17 @@ const App: React.FC = () =>{
   });
   
   return(
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+
     <ThemeProvider theme={theme}>
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/book" component={Book} />
         <Route exact path="/home">
           <Home />
         </Route>
+        <Route exact path="/register" component={Register} />
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
@@ -65,6 +72,7 @@ const App: React.FC = () =>{
     </IonReactRouter>
   </IonApp>
   </ThemeProvider>
+  </LocalizationProvider>
 )};
 
 export default App;

@@ -1,36 +1,46 @@
-import { IonContent, IonFooter, IonPage, IonTab, IonTabBar, IonTabButton } from "@ionic/react"
+import { IonContent, IonFooter, IonLabel, IonPage, IonTab, IonTabBar, IonTabButton } from "@ionic/react"
 import { Typography } from "@mui/material"
+import { useHistory } from "react-router"
 
 
 
 
 const Tabs =()=>{
 
-
+    const history=useHistory()
     return <IonPage>
-        <IonContent>
-            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <IonContent className="ion-padding">
+            <IonLabel>الخدمات</IonLabel>
+            <div onClick={()=>history.push('book')}
+            style={{overflowX:"auto",whiteSpace:"nowrap"}}>
+                            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",
+                            display:"inline-block",flexDirection:"column",alignItems:"center"}}>
                 <img src="request-service.svg" style={{height:80}} />
 
                 <Typography >
-                    Book service
+                    طلب خدمة
                 </Typography>
 
             </div>
-            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+            <div 
+            style={{margin:"5px",background:"#fff",
+            width:150,padding:"10px",borderRadius:"15px",
+            display:"inline-block",flexDirection:"column",alignItems:"center"}}>
                 <img src="request-service.svg" style={{height:80}} />
 
                 <Typography >
-                    Book service
+                 التطوع
                 </Typography>
 
             </div>
-            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",display:"inline-block",flexDirection:"column",alignItems:"center"}}>
                 <img src="request-service.svg" style={{height:80}} />
 
                 <Typography >
-                    Book service
+                      تقديم خدمة 
                 </Typography>
+
+            </div>
 
             </div>
 

@@ -4,7 +4,10 @@ http://ionicframework.com/docs/theming/ */
 @tailwind components;
 @tailwind utilities;
 /** Ionic CSS Variables **/
-
+html,body{
+  direction: rtl;
+  text-align: right;
+}
 ion-content{
   --background:var(--primary-50);
 }
