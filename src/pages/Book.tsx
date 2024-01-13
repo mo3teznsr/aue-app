@@ -23,8 +23,6 @@ import {
 import { DateCalendar } from "@mui/x-date-pickers";
 import { useHistory } from "react-router";
 import Box from "@mui/material/Box";
-import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -36,6 +34,7 @@ interface Booking {
   step: number;
   selectedEmirate: number;
   selectedTime: string;
+  address: string;
   showError: boolean;
 }
 
@@ -49,6 +48,7 @@ const Book: React.FC = () => {
     step: 1,
     selectedEmirate: 10,
     selectedTime: "",
+    address: "",
     showError: false,
   });
 
@@ -78,8 +78,8 @@ const Book: React.FC = () => {
       setBooking({
         ...booking,
         date: selectedDate,
-        step: booking.step < 3 ? 3 : booking.step, // Update step only if it's less than 3
-        selectedTime: "", // Reset selected time when date changes
+        step: booking.step < 3 ? 3 : booking.step,
+        selectedTime: "",
       });
     }
   };
@@ -141,9 +141,27 @@ const Book: React.FC = () => {
   
     return timeSlots;
   };
-  
 
-  const handlePayment = () => {};
+  const handleAddressChange = (newAddress: string) => {
+    setBooking({ ...booking, address: newAddress });
+  };
+
+  const handlePaymentAndConfirmation = () => {
+    const { service, products, date, selectedTime, selectedEmirate, address } = booking;
+
+    console.log("Selected Service:", service);
+    console.log("Selected Products:", products);
+    console.log("Selected Date:", date);
+    console.log("Selected Time Slot:", selectedTime);
+    console.log("Selected Emirate:", selectedEmirate);
+    console.log("Selected Address:", address);
+
+    // Add your logic for payment and confirmation here
+    // ...
+
+    // For now, let's just navigate to a confirmation page
+    history.push("/confirmation");
+  };
 
   return (
     <IonPage>
@@ -304,14 +322,19 @@ const Book: React.FC = () => {
               </Select>
 
               <IonLabel>العنوان</IonLabel>
-              <TextField fullWidth margin="dense" />
+              <TextField
+                fullWidth
+                margin="dense"
+                value={booking.address}
+                onChange={(e) => handleAddressChange(e.target.value)}
+              />
 
               <Button
                 fullWidth
                 color="primary"
                 variant="contained"
                 style={{ marginBottom: "1rem", marginTop: "100px" }}
-                onClick={() => handlePayment()}
+                onClick={handlePaymentAndConfirmation}
               >
                 الدفع وتأكيد الحجز
               </Button>
