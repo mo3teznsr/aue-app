@@ -9,13 +9,16 @@ import {
   IonSelectOption,
   IonItem,
 } from "@ionic/react";
-import { ArrowForward } from "@mui/icons-material";
+import { ArrowForward, CreditCard } from "@mui/icons-material";
 import {
+    Alert,
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Grid,
   IconButton,
+  InputAdornment,
   MenuItem,
   Select,
   TextField,
@@ -53,9 +56,16 @@ const Book: React.FC = () => {
   });
 
   const services = ["مناسبة زواج", "عزاء"];
-  const products = ["مقهوجي", "خيمة مناسبات"];
+  const products = [
+"مقهوين",
+  "مقهويات",
+  "خيام رجال عدد ٢٠٠ شخص + ٣٠ طاولة",
+  "خيام نساء عدد ٢٠٠ شخص + ٣٠ طاولة",
+  "زفة",
+  "المكرفونات والسماعات",
+   "التصوير"];
 
-  const mockUnavailableDates = [new Date("2024-01-15"), new Date("2024-01-20")];
+  const mockUnavailableDates = [new Date("2024-01-15"), new Date("2024-01-20"),new Date("2024-02-03")];
 
   const mockUnavailableTimeSlots: Record<string, string[]> = {
     "2024-01-16": ["09:00", "10:00", "12:00"],
@@ -166,16 +176,17 @@ const Book: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IconButton onClick={() => history.goBack()}>
+        <IconButton slot="start" onClick={() => history.goBack()}>
           <ArrowForward />
         </IconButton>
         <IonTitle>حجز خدمة</IonTitle>
       </IonHeader>
-      <IonContent className="ion-padding">
-        <div>
+      <IonContent >
+        <div style={{display:"flex",flexDirection:"column",height:"100%",paddingInline:"10px"}}>
+            <div style={{flex:1,}}>
           {booking.step === 1 && (
             <>
-              <h6>الرجاء تحديد نوع الخدمة</h6>
+              <Typography variant="h6" marginY={2}>الرجاء تحديد نوع الخدمة</Typography>
               {services.map((item) => (
                 <Button
                   fullWidth
@@ -198,7 +209,8 @@ const Book: React.FC = () => {
 
           {booking.step === 2 && (
             <>
-              <h6>الرجاء تحديد الخدمات المطلوبة</h6>
+                 <Typography variant="h6" marginY={2}>
+                الرجاء تحديد الخدمات المطلوبة</Typography>
               <FormGroup>
                 {products.map((item) => (
                   <FormControlLabel
@@ -229,12 +241,12 @@ const Book: React.FC = () => {
 
           {booking.step === 3 && (
             <>
-              <h6>الرجاء تحديد تاريخ المناسبة</h6>
+                <Typography variant="h6" marginY={2}>
+                الرجاء تحديد تاريخ المناسبة</Typography>
               <div
                 style={{
                   background: "#fff",
                   margin: "10px",
-                  width: "100%",
                   borderRadius: ".75rem",
                   padding: "10px",
                   direction: "ltr",
@@ -257,9 +269,15 @@ const Book: React.FC = () => {
                   onChange={handleDateChange}
                 />
               </div>
+              { (!booking.date ) && (
+                      <Typography color="error" variant="caption">
+                        الرجاء اختيار تاريخ ووقت المناسبة.
+                      </Typography>
+                    )}
               {booking.date && (
                 <>
-                  <h6>الرجاء تحديد الوقت</h6>
+                     <Typography variant="h6" marginY={2}>
+                    الرجاء تحديد الوقت</Typography>
                   <div style={{ display: "flex", flexWrap: "wrap" }}>
                     {generateTimeSlots(booking.date).map(({ time, available }) => (
                       <Button
@@ -291,12 +309,7 @@ const Book: React.FC = () => {
                       يجب عليك اختيار فترة زمنية أيضًا.
                     </Typography>
                   )}
-                  {booking.showError &&
-                    (!booking.date || !booking.selectedTime) && (
-                      <Typography color="error" variant="caption">
-                        الرجاء اختيار تاريخ ووقت المناسبة.
-                      </Typography>
-                    )}
+                
                 </>
               )}
             </>
@@ -304,7 +317,8 @@ const Book: React.FC = () => {
 
           {booking.step === 4 && (
             <>
-              <h6>الرجاء تحديد الامارة</h6>
+                 <Typography variant="h6" marginY={2}>
+                الرجاء تحديد الامارة</Typography>
               <IonLabel>الإمارة</IonLabel>
               <Select
                 id="demo-simple-select"
@@ -329,47 +343,118 @@ const Book: React.FC = () => {
                 onChange={(e) => handleAddressChange(e.target.value)}
               />
 
+             
+            </>
+          )}
+{booking.step===6&&<div style={{display:"flex",
+                flexDirection:"column",
+                gap:10,
+                paddingTop:120,
+                alignItems:"center"
+                }}>
+                    <Typography>
+                        تم استلام طلبك سوف يصلك بريد الكتروني بالتأكيد
+                    </Typography>
+                    <img src="success.gif" style={{borderRadius:150}}
+                     height={150} width={150} />
+                    <Button fullWidth 
+                    onClick={history.goBack}
+                    variant="outlined" >
+                        العودة للرئيسية
+                    </Button>
+                </div>}
+{booking.step === 5 && (
+            <>
+                 <Typography variant="h6" marginY={2}>
+                تأكيد الحجز  </Typography>
+              <IonLabel>رقم البطاقة</IonLabel>
+              <TextField
+              error={booking.showError&&!booking.card_number}
+               value={booking.card_number} 
+               onChange={e=>setBooking({...booking,card_number:e.target.value})}
+              fullWidth 
+              margin="dense"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CreditCard />
+                  </InputAdornment>
+                ),
+              }}
+              />
+              <Grid container spacing={1}>
+                <Grid item  xs={8}>
+                <IonLabel> تاريخ الصلاحية</IonLabel>
+                    <TextField 
+                    error={booking.showError&&!booking.card_exp}
+                    value={booking.card_exp} 
+                    onChange={e=>setBooking({...booking,card_exp:e.target.value})}
+                     fullWidth margin="dense"  />
+                </Grid>
+                <Grid item xs={4}>
+                <IonLabel>CVC</IonLabel>
+                <TextField
+                error={booking.showError&&!booking.cvc}
+                 value={booking.cvc} 
+                 onChange={e=>setBooking({...booking,cvc:e.target.value})}
+                 fullWidth margin="dense" type="number" />
+                </Grid>
+                
+              </Grid>
+               
+<Alert style={{marginTop:20}} severity="error" >
+    الرجاء ادخال كل حقول البطاقة
+</Alert>
+
               <Button
                 fullWidth
                 color="primary"
                 variant="contained"
                 style={{ marginBottom: "1rem", marginTop: "100px" }}
-                onClick={handlePaymentAndConfirmation}
+                onClick={()=>{
+                    if(!(booking.card_exp&&booking.cvc&&booking.card_number))
+                    {
+                        setBooking({...booking,showError:true})
+                    }
+                    else {
+                        handleNext()
+                    }
+                    }}
               >
                 الدفع وتأكيد الحجز
               </Button>
             </>
           )}
         </div>
-
         <Box
           sx={{ display: "flex", justifyContent: "space-between", padding: 2, marginTop: "150px" }}
         >
-          {booking.step > 1 && (
+          {booking.step > 1 &&booking.step<6&& (
             <Button
               size="small"
               style={{
                 padding: "10px",
-                width: "70px",
+                width: "80px",
                 height: "40px",
-                border: "1px solid ",
-                borderColor: "inherit",
+               
+               
               }}
+              variant="contained"
               onClick={handleBack}
             ><KeyboardArrowRight />
               الرجوع
               
             </Button>
           )}
-          {booking.step < 4 && (
+          {booking.step < 5 && (
             <Button
+            variant="contained"
               size="small"
               style={{
                 padding: "10px",
-                width: "70px",
+                width: "80px",
                 height: "40px",
-                border: "1px solid ",
-                borderColor: "inherit",
+               
               }}
               onClick={handleNext}
             >
@@ -378,6 +463,9 @@ const Book: React.FC = () => {
             </Button>
           )}
         </Box>
+        </div>
+
+       
       </IonContent>
     </IonPage>
   );

@@ -10,10 +10,11 @@ const Tabs =()=>{
     const history=useHistory()
     return <IonPage>
         <IonContent className="ion-padding">
-            <IonLabel>الخدمات</IonLabel>
-            <div onClick={()=>history.push('book')}
+            <Typography variant="h5">الخدمات</Typography>
+            <div 
             style={{overflowX:"auto",whiteSpace:"nowrap"}}>
-                            <div style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",
+                            <div onClick={()=>history.push('book')}
+                             style={{margin:"5px",background:"#fff",width:150,padding:"10px",borderRadius:"15px",
                             display:"inline-block",flexDirection:"column",alignItems:"center"}}>
                 <img src="request-service.svg" style={{height:80}} />
 
@@ -22,7 +23,7 @@ const Tabs =()=>{
                 </Typography>
 
             </div>
-            <div 
+            <div onClick={()=>history.push("/volunteer")}
             style={{margin:"5px",background:"#fff",
             width:150,padding:"10px",borderRadius:"15px",
             display:"inline-block",flexDirection:"column",alignItems:"center"}}>

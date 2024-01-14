@@ -22,12 +22,13 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { ThemeProvider, createTheme } from '@mui/material';
-import { green,lightGreen } from '@mui/material/colors';
+import { brown, green,lightGreen } from '@mui/material/colors';
 import Tabs from './pages/Tabs';
 import Register from './pages/Register';
 import Book from './pages/Book';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import Volunteer from './pages/Valunteer';
 setupIonicReact();
 
 const App: React.FC = () =>{
@@ -35,18 +36,34 @@ const App: React.FC = () =>{
   const theme = createTheme({
     palette: {
       primary: {
-        main: green[300],
+        main: brown[300],
       },
      
      
+    },
+    typography: {
+      fontFamily: [
+        'Cairo',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
     shape:{
       borderRadius:15,
     },
     components:{
-      
+    MuiSelect:{
+      defaultProps:{style: {background:"#fff",borderRadius:15}}
+    },
      MuiTextField:{
-      defaultProps:{style: {background:"#fff"}}
+      defaultProps:{style: {background:"#fff",borderRadius:15}}
      },
      
     }
@@ -67,6 +84,7 @@ const App: React.FC = () =>{
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
+        <Route  exact path="/volunteer" component={Volunteer} />
         <Route exact path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>

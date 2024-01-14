@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
-import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Email, Lock } from '@mui/icons-material';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
@@ -20,16 +20,24 @@ const Home: React.FC = () => {
     <IonPage>
       
    
-      <IonContent className="ion-padding"  >
+      <IonContent  >
+        <div>
+          <img src="bg1.jpg" style={{width:"500px",
+          height:"100dvh",
+          objectFit:"cover",
+          position:"absolute",
+          top:0,
+          right:0
+          }} />
+        <Typography variant='h3' textAlign={'center'} marginTop={10}> السنع الامارات</Typography>
 
-      <h1 style={{ fontSize: '60px', color: '#3880ff', textAlign: 'center', marginTop:'50px' }}>السنع الامارات</h1>
 
         <div style={{display:"flex",alignItems:"center",width:"100%",marginTop:"4rem",marginBottom:"4rem",justifyContent:"center"}}>
 
-        <img src="logo.png" style={{height:120}} />
+        <img src="logo.png" style={{height:420}} />
         </div>
 
-        <div>
+        <div style={{paddingInline:10}}>
      
         
 
@@ -39,7 +47,7 @@ const Home: React.FC = () => {
         
         </div>
 
-       
+       </div>
      
        
       </IonContent>
